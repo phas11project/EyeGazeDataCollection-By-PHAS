@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Eye Gaze Data Collection by PHAS Group 11</title>
+  <script src="https://cdn.jsdelivr.net/npm/piexifjs"></script>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      font-family: 'Roboto', sans-serif;
+      background-color: #f4f7fa;
+      color: #333;
+      margin: 0;
+      padding: 20px;
+      height: 100vh;
+      overflow-y: auto;
+    }
+    h1 {
+      color: #4a90e2;
+      font-size: 28px;
+      margin-bottom: 15px;
+      text-align: center;
+      line-height: 1.4;
+    }
+    h1 .phas-group {
+      display: block;
+      font-size: 22px;
+      color: #4a90e2;
+      font-weight: bold;
+    }
+    .content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      max-width: 800px;
+      width: 100%;
+    }
+    #videoContainer {
+      position: relative;
+      border: 3px solid #4a90e2;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+      margin-bottom: 30px;
+      display: flex;
+      justify-content: center;
+      width: 100%;
+      max-width: 650px;
+      height: auto;
+    }
+    /* Mirror the video for a selfie view */
+    #video {
+      display: block;
+      border-radius: 12px;
+      width: 100%;
+      height: auto;
+      transform: scaleX(-1);
+    }
+    .dropdown,
+    .lighting-dropdown,
+    .circle-checkbox {
+      width: 100%;
+      max-width: 350px;
+      text-align: center;
+      margin: 15px 0;
+    }
+    label {
+      font-size: 18px;
+      margin-bottom: 12px;
+      display: block;
+      font-weight: bold;
+      color: #333;
+    }
+    .dropdown select,
+    .lighting-dropdown select {
+      padding: 14px 20px;
+      font-size: 18px;
+      border: 2px solid #4a90e2;
+      border-radius: 10px;
+      background-color: #ffffff;
+      cursor: pointer;
+      width: 100%;
+      transition: all 0.3s ease-in-out;
+    }
+    .dropdown select:hover,
+    .lighting-dropdown select:hover {
+      border-color: #357ABD;
+    }
+    .circle-checkbox {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      margin-top: 15px;
+      cursor: pointer;
+    }
+    .circle-checkbox input {
+      appearance: none;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background-color: #ccc;
+      margin-right: 12px;
+      border: 2px solid #fff;
+      cursor: pointer;
+    }
+    .circle-checkbox input:checked {
+      background-color: #28a745;
+    }
+    .status {
+      font-size: 20px;
+      color: #357ABD;
+      font-weight: bold;
+      margin-top: 15px;
+      display: block;
+      visibility: visible;
+    }
+    .button-container {
+      margin-top: 15px;
+      display: flex;
+      justify-content: center;
+      width: 100%;
+      max-width: 350px;
+    }
+    button {
+      padding: 14px 22px;
+      font-size: 18px;
+      color: #fff;
+      background-color: #4a90e2;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      width: 100%;
+    }
+    button:hover {
+      background-color: #357ABD;
+    }
+    #stopBtn {
+      background-color: #ff3b3b;
+    }
+    #stopBtn:hover {
+      background-color: #ff1a1a;
+    }
+    .guidelines {
+      margin-top: 30px;
+      text-align: left;
+      color: #555;
+      max-width: 700px;
+      font-size: 16px;
+    }
+    .guidelines ul {
+      padding-left: 20px;
+    }
+    .guidelines li {
+      margin-bottom: 12px;
+    }
+    .circle-checkbox label {
+      margin-left: 12px;
+      font-weight: normal;
+      font-size: 18px;
+    }
+    .footer {
+      margin-top: auto;
+      text-align: center;
+      font-size: 14px;
+      color: #fffefe;
+      padding: 10px;
+      width: 100%;
+      background-color: #4a90e2;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+  </style>
+</head>
+<body>
+  <div class="content">
+    <h1>
+      Eye Gaze Data Collection
+      <span class="phas-group">by PHAS Group 11</span>
+    </h1>
+    
+    <!-- Start Camera Button -->
+    <div class="button-container" style="max-width: 350px;">
+      <button id="startCameraBtn" onclick="startCamera()">Start Camera</button>
+    </div>
+    
+    <p>Select a label and start data collection.</p>
+
+    <div id="videoContainer">
+      <video id="video" width="100%" height="auto" playsinline></video>
+    </div>
+
+    <div class="dropdown">
+      <label for="labelSelect">Choose Label:</label>
+      <select id="labelSelect">
+        <option value="Center">Center</option>
+        <option value="Left">Left</option>
+        <option value="Right">Right</option>
+        <option value="Blink">Blink</option>
+        <option value="Stop">Stop</option>
+      </select>
+    </div>
+
+    <div class="button-container">
+      <button id="startStopBtn" onclick="startStopCapture()">Start Data Collection</button>
+    </div>
+
+    <div class="lighting-dropdown">
+      <label for="lightingSelect">Lighting Condition:</label>
+      <select id="lightingSelect">
+        <option value="Good">Good</option>
+        <option value="Poor">Poor</option>
+        <option value="Sunlight">Sunlight</option>
+      </select>
+    </div>
+
+    <div class="dropdown">
+      <label for="glassesSelect">Wearing Glasses:</label>
+      <select id="glassesSelect">
+        <option value="Yes">Yes</option>
+        <option value="No">No</option>
+      </select>
+    </div>
+
+    <div class="status" id="status">Status: Idle</div>
+
+    <div class="guidelines">
+      <h3>Guidelines for Data Collection:</h3>
+      <ul>
+        <li>Ensure proper lighting to avoid glare and shadows on the face.</li>
+        <li>Position your face such that it is fully visible to the camera.</li>
+        <li>For glasses-wearing users, clean the lenses to minimize reflections.</li>
+        <li>Hold each gaze direction (Center, Left, Right) steadily for 3-5 seconds.</li>
+        <li>Ensure the entire eye region is visible during gaze capture.</li>
+        <li>For "Blink" data, blink naturally and avoid rapid eye movements.</li>
+        <li>Repeat the data collection process for multiple sessions to ensure diversity in data.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <span>Copyright © 2025 PHAS Group 11</span>
+  </div>
+
+  <script>
+    const video = document.getElementById('video');
+    const startCameraBtn = document.getElementById('startCameraBtn');
+    const startStopBtn = document.getElementById('startStopBtn');
+    const statusDisplay = document.getElementById('status');
+    const labelSelect = document.getElementById('labelSelect');
+    const lightingSelect = document.getElementById('lightingSelect');
+    const glassesSelect = document.getElementById('glassesSelect');
+
+    let stream = null;
+    let collecting = false;
+    let interval;
+    let currentLabel = "Center";
+    let lightingCondition = "Good";
+    let wearingGlasses = "No";
+
+    // Update selected label and metadata when changed
+    labelSelect.addEventListener('change', function () {
+      currentLabel = labelSelect.value;
+    });
+
+    lightingSelect.addEventListener('change', function () {
+      lightingCondition = lightingSelect.value;
+    });
+
+    glassesSelect.addEventListener('change', function () {
+      wearingGlasses = glassesSelect.value;
+    });
+
+    // Start the camera only after user interaction
+    function startCamera() {
+      if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+        navigator.mediaDevices.getUserMedia({ video: true })
+          .then((mediaStream) => {
+            stream = mediaStream;
+            video.srcObject = stream;
+            video.play();
+            // Disable the start camera button after successful start
+            startCameraBtn.disabled = true;
+            startCameraBtn.textContent = "Camera Started";
+          })
+          .catch((error) => {
+            console.error("Error accessing camera: ", error);
+            alert("Unable to access the camera. Please check camera permissions.");
+          });
+      } else {
+        alert("getUserMedia is not supported in this browser.");
+      }
+    }
+
+    function startStopCapture() {
+      if (!stream) {
+        alert("Please start the camera first.");
+        return;
+      }
+      if (collecting) {
+        collecting = false;
+        statusDisplay.textContent = "Status: Idle";
+        statusDisplay.style.color = "#357ABD"; // Blue for idle state
+        clearInterval(interval);
+        startStopBtn.textContent = "Start Data Collection";
+        startStopBtn.style.backgroundColor = "#4a90e2";
+      } else {
+        collecting = true;
+        statusDisplay.textContent = "Status: Collecting...";
+        statusDisplay.style.color = "#28a745"; // Green when collecting
+        interval = setInterval(captureImage, 2000);
+        startStopBtn.textContent = "Stop Data Collection";
+        startStopBtn.style.backgroundColor = "#ff3b3b";
+      }
+    }
+
+    function captureImage() {
+      const timestamp = Date.now();
+      const canvas = document.createElement('canvas');
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      const ctx = canvas.getContext('2d');
+
+      // Mirror the image when capturing by translating and scaling the context
+      ctx.translate(canvas.width, 0);
+      ctx.scale(-1, 1);
+      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+      const imageDataUrl = canvas.toDataURL('image/jpeg');
+      addMetadataAndDownload(imageDataUrl, timestamp);
+    }
+
+    function addMetadataAndDownload(dataUrl, timestamp) {
+      const metadata = {
+        label: currentLabel,
+        timestamp: timestamp,
+        lighting: lightingCondition,
+        glasses: wearingGlasses
+      };
+
+      // Embed lighting condition and glasses status in the EXIF data
+      const exifData = {
+        '0th': {
+          [piexif.ImageIFD.Make]: `Lighting: ${lightingCondition}, Glasses: ${wearingGlasses}`,
+          [piexif.ImageIFD.Model]: "EyeGazeModel2025"
+        },
+        'Exif': {
+          [piexif.ExifIFD.DateTimeOriginal]: new Date(timestamp).toISOString()
+        },
+        'UserComment': JSON.stringify(metadata)
+      };
+
+      const exifBytes = piexif.dump(exifData);
+      const newDataUrl = piexif.insert(exifBytes, dataUrl);
+
+      const a = document.createElement('a');
+      const filename = `${currentLabel}_${timestamp}.jpg`;
+      a.href = newDataUrl;
+      a.download = filename;
+      a.click();
+    }
+  </script>
+</body>
+</html>
