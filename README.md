@@ -10,6 +10,8 @@ Key features include:
 
 This tool is designed to contribute to innovative solutions, such as gaze-based wheelchair controls, by improving the accuracy and reliability of gaze detection systems.
 
+![PREVIEW](https://github.com/user-attachments/assets/06b94548-86eb-4b95-9e75-3c4e68bee7bf)
+
 ## License
 
 This work is licensed under the [Creative Commons Attribution-NonCommercial 4.0 International License](http://creativecommons.org/licenses/by-nc/4.0/).
