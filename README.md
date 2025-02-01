@@ -9,3 +9,9 @@ Key features include:
 - **Deep Learning Ready**: Data is structured to support training of machine learning models for gaze-based applications.
 
 This tool is designed to contribute to innovative solutions, such as gaze-based wheelchair controls, by improving the accuracy and reliability of gaze detection systems.
+
+## License
+
+This work is licensed under the [Creative Commons Attribution-NonCommercial 4.0 International License](http://creativecommons.org/licenses/by-nc/4.0/).
+
+![Creative Commons License](https://i.creativecommons.org/l/by-nc/4.0/88x31.png)
