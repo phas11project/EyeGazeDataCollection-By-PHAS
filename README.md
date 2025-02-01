@@ -1,14 +1,18 @@
 # Eye Gaze Data Collection Tool BY PHAS GROUP 11
 
-This web-based application is designed to efficiently capture and label eye gaze directions, including left, right, center, blink, and stop. It integrates real-time webcam functionality for seamless data collection, making it ideal for gaze-controlled systems and similar applications.
+## **Project Title and Description**
 
-Key features include:  
-- **Automatic Labeling**: Images are labeled and timestamped automatically for easy organization.  
-- **Metadata Support**: Capture lighting conditions and glasses usage to enhance training data quality.  
-- **Real-Time Integration**: Ensures continuous, accurate data capture through webcam integration.  
-- **Deep Learning Ready**: Data is structured to support training of machine learning models for gaze-based applications.
+**Eye Gaze Data Collection Tool** is a web-based platform designed for capturing and labeling eye gaze directions (left, right, center, blink, stop) using real-time webcam integration. The tool supports metadata collection, including lighting conditions and glasses usage, to improve the quality of training data for deep learning models. This makes it ideal for creating advanced gaze-based applications, such as wheelchair control, that require accurate and real-time gaze tracking.
 
-This tool is designed to contribute to innovative solutions, such as gaze-based wheelchair controls, by improving the accuracy and reliability of gaze detection systems.
+## **Features**
+
+- **Real-Time Webcam Integration**: Capture eye gaze directions in real-time through a webcam.
+- **Automatic Labeling**: Eye gaze data is automatically captured and saved with the correct labels and timestamps for easy organization.
+- **Metadata Collection**: Supports capturing lighting conditions (good, poor, sunlight) and glasses usage to improve training data quality.
+- **Deep Learning Compatibility**: Data is structured to enhance training for machine learning models, enabling advanced gaze recognition applications.
+- **Responsive Design**: Optimized for different screen sizes and devices, making it accessible across platforms.
+
+  ## **Screenshot**
 
 ![PREVIEW](https://github.com/user-attachments/assets/06b94548-86eb-4b95-9e75-3c4e68bee7bf)
 
