@@ -14,6 +14,9 @@
 
   ## **Screenshot**
 
+  ![Eye gaze data collection](https://github.com/user-attachments/assets/c8f34eea-0cb6-46aa-9898-e85826ecbec3)
+
+
 ![PREVIEW](https://github.com/user-attachments/assets/06b94548-86eb-4b95-9e75-3c4e68bee7bf)
 
 ## License
