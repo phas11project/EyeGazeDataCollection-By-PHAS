@@ -12,7 +12,10 @@
 - **Deep Learning Compatibility**: Data is structured to enhance training for machine learning models, enabling advanced gaze recognition applications.
 - **Responsive Design**: Optimized for different screen sizes and devices, making it accessible across platforms.
 
-  ## **Screenshot**
+## Contributors  
+- [Aivin Thankachan K](https://github.com/Aivintk) – Developer  
+
+## **Screenshot**
 
 ![Eye gaze data collection](https://github.com/user-attachments/assets/c8f34eea-0cb6-46aa-9898-e85826ecbec3)
 
